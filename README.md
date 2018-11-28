@@ -1,19 +1,21 @@
 # AWS
 https://aws.amazon.com
 
-# 자습서
+## 자습서
 https://aws.amazon.com/ko/getting-started/tutorials
 
-# 콘솔
+## 콘솔
 https://console.aws.amazon.com/console/home
 
-# IAM
+
+# Cloud
+## IAM
 https://console.aws.amazon.com/iam
 
-# 웹 호스팅
+## 웹 호스팅
 https://aws.amazon.com/ko/websites
 
-# S3
+## S3
 https://aws.amazon.com/ko/s3
 
 해당 파일에 접근 방법
@@ -21,7 +23,7 @@ https://aws.amazon.com/ko/s3
 개요 > 해당 파일 클릭 > 링크 클릭
 ```
 
-## AWS Command Line Interface 설치
+### AWS Command Line Interface 설치
 https://docs.aws.amazon.com/ko_kr/cli/latest/userguide/installing.html
 
 ```sh
@@ -47,26 +49,26 @@ source ~/.bash_profile
 pip install awscli --upgrade --user
 ```
 
-## S3에서 IAM 사용
+### S3에서 IAM 사용
 https://aws.amazon.com/ko/getting-started/tutorials/backup-to-s3-cli/
 
-### AWS CLI S3 사용중 에러가 발생할 경우
+#### AWS CLI S3 사용중 에러가 발생할 경우
 https://lovemewithoutall.github.io/it/aws-cli-configure/
 
-# Lambda
+## Lambda
 https://aws.amazon.com/ko/lambda
 
-# Amplify Framework
+## Amplify Framework
 https://aws-amplify.github.io/docs
 
-## Amplify Framework 설치
+### Amplify Framework 설치
 ```sh
 npm install -g @aws-amplify/cli
 amplify configure
   # 리전을 ap-northeast-1으로 설정한다.
 ```
 
-## Amplify 초기화
+### Amplify 초기화
 ```sh
 # 도움말
 amplify
@@ -95,13 +97,13 @@ amplify remove api
 amplify console api
 ```
 
-## Amplify Javascript 연동
+### Amplify Javascript 연동
 https://aws-amplify.github.io/docs/js/start
 https://aws-amplify.github.io/docs/js/api
 
-## Amplify 프로젝트 생성
+### Amplify 프로젝트 생성
 
-### Auth
+#### Auth
 ```
 No, I will set up my own configuration.
 User Sign-Up & Sign-In only (Best used with a cloud API only)
@@ -121,10 +123,10 @@ Specify the app's refresh token expiration period (in days): 30
 Do you want to specify the user attributes this app can read and write? N
 ```
 
-### DynamoDB
+#### DynamoDB
 테이블을 미리 만든다.
 
-### API
+#### API
 ```
 REST
 Provide a friendly name for your resource to be used as a label for this category in the project: scoreviewer
@@ -139,60 +141,60 @@ Use a DynamoDB table already deployed on AWS
 
 Do you want to edit the local lambda function now? Y
 Restrict API access: Y
-Authenticated users only
+Authenticated users & guest
 read/write
 Do you want to add another path? N
 ```
 
-### JSON 웹 토큰 확인
+#### JSON 웹 토큰 확인
 ```
 https://cognito-idp.{region}.amazonaws.com/{userPoolId}/.well-known/jwks.json
 ```
 
-# 리전
+## 리전
 https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/using-regions-availability-zones.html
 
-## 리전 속도 측정
+### 리전 속도 측정
 https://www.cloudping.info
 
 http://s3-accelerate-speedtest.s3-accelerate.amazonaws.com/en/accelerate-speed-comparsion.html
 
-## 도쿄 리전
+### 도쿄 리전
 AP-NORTHEAST-1
 
-## 서울 리전
+### 서울 리전
 AP-NORTHEAST-2
 
-## 이전 배포
+### 이전 배포
 https://d2nfsbmw1bdqln.cloudfront.net
 
-## Events 사용량
+### Events 사용량
 https://console.aws.amazon.com/pinpoint/home/?region=us-east-1#/apps/51fb001a4da54fabad43ec4403e28ffe/analytics/events
 
-# GraphQL
+## GraphQL
 https://graphql.github.io/
 
-## demo
+### demo
 https://github.com/graphql/graphiql
 
-# AppSync
+## AppSync
 https://console.aws.amazon.com/appsync
 
-# DynamoDB
+## DynamoDB
 https://console.aws.amazon.com/dynamodb
 
-# CloudFormation
+## CloudFormation
 https://console.aws.amazon.com/cloudformation/
 
 클라우드 전체를 관리하는듯 하다.
 
-# Cognito (사용자 풀)
+## Cognito (사용자 풀)
 https://console.aws.amazon.com/cognito
 
-## JSON 웹 토큰 확인 방법
+### JSON 웹 토큰 확인 방법
 https://docs.aws.amazon.com/ko_kr/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-verifying-a-jwt.html
 
-# 모든 서비스
+## 모든 서비스
 전역
   S3, IAM
 리전
@@ -201,3 +203,77 @@ https://docs.aws.amazon.com/ko_kr/cognito/latest/developerguide/amazon-cognito-u
   Lambda,
   DynamoDB
   CloudFormation
+
+# EC2
+https://console.aws.amazon.com/ec2
+
+## RDS
+https://console.aws.amazon.com/rds
+
+### MySQL 설치
+#### 아웃바운드 3306번 추가
+
+## Linux Instance
+### 아웃바운드 22번 추가
+### SSH 연결
+https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html
+
+인스턴스 생성때 생성한 keypair.pem을 해당 경로로 가지고 옴
+```sh
+ssh -i ./keypair.pem ec2-user@<퍼블릭 DNS>
+  # 기본 유저는 ec2-user 이다.
+```
+
+### telnet client 설치
+```sh
+sudo yum install telnet
+# mysql 포트 확인
+telnet <엔드포인트> 3306
+```
+
+### mysql client 설치, 연결
+https://docs.aws.amazon.com/ko_kr/AmazonRDS/latest/UserGuide/USER_ConnectToInstance.html
+```sh
+sudo yum install mysql
+mysql -h myinstance.cqbkpklqb0qa.ap-northeast-2.rds.amazonaws.com -P 3306 -u <사용자명> -p
+# mysql>
+SHOW DATABASES;
+CREATE DATABASE DJANGO_TUTORIAL;
+```
+
+### git 설치
+```sh
+sudo yum install git
+```
+
+### python3 설치
+http://snowdeer.github.io/python/2018/02/20/install-python3-on-centos/
+```sh
+sudo yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+yum search python3
+sudo yum install python36
+python3 --version
+# 심볼릭 링크 수정
+sudo unlink /usr/bin/python
+sudo ln -s /usr/bin/python36 /usr/bin/python
+python --version
+sudo unlink /usr/bin/pip
+sudo ln -s /usr/bin/pip-3.6 /usr/bin/pip
+pip --version
+# pip 버전 올리기 (현재 버전 18.1)
+sudo pip install --upgrade pip
+sudo ln /usr/local/bin/pip /usr/bin/pip
+```
+<!-- # sudo yum install python36-devel mysql-devel -->
+
+### Django 실행
+```sh
+vi <project>/settings.py
+```
+```python
+ALLOWED_HOSTS = ['<퍼블릭 DNS>', 'localhost']
+```
+```sh
+python manage.py runserver 0:8000
+  # 0은 0.0.0.0을 뜻함
+```
