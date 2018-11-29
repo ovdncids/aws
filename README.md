@@ -234,7 +234,7 @@ telnet <엔드포인트> 3306
 ### mysql client 설치, 연결
 https://docs.aws.amazon.com/ko_kr/AmazonRDS/latest/UserGuide/USER_ConnectToInstance.html
 ```sh
-sudo yum install mysql
+sudo yum install mysql mysql-devel
 mysql -h myinstance.cqbkpklqb0qa.ap-northeast-2.rds.amazonaws.com -P 3306 -u <사용자명> -p
 # mysql>
 SHOW DATABASES;
@@ -249,9 +249,9 @@ sudo yum install git
 ### python3 설치
 http://snowdeer.github.io/python/2018/02/20/install-python3-on-centos/
 ```sh
-sudo yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+sudo yum install https://centos7.iuscommunity.org/ius-release.rpm
 yum search python3
-sudo yum install python36
+sudo yum install python36 python36-devel gcc
 python3 --version
 # 심볼릭 링크 수정
 sudo unlink /usr/bin/python
@@ -264,7 +264,10 @@ pip --version
 sudo pip install --upgrade pip
 sudo ln /usr/local/bin/pip /usr/bin/pip
 ```
-<!-- # sudo yum install python36-devel mysql-devel -->
+
+### Django 설치
+sudo pip install Django==2.1.3
+sudo pip install mysqlclient
 
 ### Django 실행
 ```sh
