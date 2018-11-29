@@ -246,6 +246,22 @@ CREATE DATABASE DJANGO_TUTORIAL;
 sudo yum install git
 ```
 
+#### username 또는 password에 특수문자가 들어 갈 경우
+https://fabianlee.org/2016/09/07/git-calling-git-clone-using-password-with-special-character/
+```
+!   #   $    &   '   (   )   *   +   ,   /   :   ;   =   ?   @   [   ]
+%21 %23 %24 %26 %27 %28 %29 %2A %2B %2C %2F %3A %3B %3D %3F %40 %5B %5D
+```
+
+```sh
+# git clone 할때 유저와 패스워드 넣기 (비밀번호를 다시는 물어 보지 않는다.)
+git clone https://username:password@gitlab.com/username/repo.git
+# 특정 기간 동안 묻지 않기 (기본: 15분)
+git config --global credential.helper cache
+# 특정 기간 10일로 늘리기
+git config --global credential.helper 'cache --timeout=864000'
+```
+
 ### python3 설치
 http://snowdeer.github.io/python/2018/02/20/install-python3-on-centos/
 ```sh
@@ -266,8 +282,12 @@ sudo ln /usr/local/bin/pip /usr/bin/pip
 ```
 
 ### Django 설치
+```sh
+# 장고 설치
 sudo pip install Django==2.1.3
+# MySQL 드라이버 설치
 sudo pip install mysqlclient
+```
 
 ### Django 실행
 ```sh
