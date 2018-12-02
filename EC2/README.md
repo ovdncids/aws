@@ -42,10 +42,10 @@ telnet <Linux Instance 퍼블릭 DNS(IPv4)> 8000
 
 연결이 된다면 설정 완료 입니다.
 
-# GitLab.com
-https://gitlab.com
+# Bitbucket
+https://bitbucket.org
 
-수업에 사용할 git repository를 무료로 제공 해주는 사이트 입니다.
+수업에 사용할 git repository cloud를 무료로 제공 해주는 사이트 입니다.
 
 가입 하시고 이메일 인증 받으시면 됩니다.
 
