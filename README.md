@@ -210,6 +210,14 @@ https://console.aws.amazon.com/ec2
 ## RDS
 https://console.aws.amazon.com/rds
 
+### Linux 버전 확인
+https://zetawiki.com/wiki/%EB%A6%AC%EB%88%85%EC%8A%A4_%EC%A2%85%EB%A5%98_%ED%99%95%EC%9D%B8,_%EB%A6%AC%EB%88%85%EC%8A%A4_%EB%B2%84%EC%A0%84_%ED%99%95%EC%9D%B8
+```sh
+grep . /etc/*-release
+cat /etc/*-release | uniq
+  # Linux 종류는 rhel fedora
+```
+
 ### MySQL 설치
 #### 아웃바운드 3306번 추가
 
@@ -291,6 +299,9 @@ sudo pip install mysqlclient
 
 ### Django 실행
 ```sh
+# Django 프로젝트 설치
+django-admin startproject django_with_nginx
+
 vi <project>/settings.py
 ```
 ```python
@@ -299,4 +310,142 @@ ALLOWED_HOSTS = ['<퍼블릭 DNS>', 'localhost']
 ```sh
 python manage.py runserver 0:8000
   # 0은 0.0.0.0을 뜻함
+```
+
+### WSGI, uWSGI, uwsgi 용어
+http://victorydntmd.tistory.com/257
+
+#### WSGI
+통신을 위한 표준 인터페이스 스텍
+
+#### uWSGI
+애플리케이션을 처리할 수 있는 애플리케이션 서버 커테이너?
+
+#### uwsgi
+기본 프로토콜. 예) uwsgi://
+
+### uWSGI 설치
+```sh
+sudo pip install uwsgi
+uwsgi --version
+# 테스트 실행
+# https://docs.djangoproject.com/en/2.1/howto/deployment/wsgi/uwsgi/
+## Django 끄고 실행해야 한다.
+uwsgi --http=:8000 --chdir=<프로젝트 경로> --module=<프로젝트 명>.wsgi:application
+  # http://localhost:8000 실행 후 django 페이지가 뜨면 성공
+```
+
+### uWSGI 설정
+```sh
+# django_with_nginx = 프로젝트 명
+# 설정파일 생성
+sudo ln -s /usr/local/bin/uwsgi /usr/bin/uwsgi
+sudo mkdir -p /etc/uwsgi/sites
+sudo vi /etc/uwsgi/sites/django_with_nginx.ini
+```
+```ini
+[uwsgi]
+project = django_with_nginx
+username = root
+base = /root
+# base directory
+chdir = /home/ec2-user/django_with_nginx
+# python path
+## home = /usr/bin/python36
+# virtualenv path
+## virtualenv = /root/Env/test
+# wsgi.py path
+module = django_with_nginx.wsgi:application
+master = true
+processes = 5
+uid = root
+# socket
+## socket = /run/uwsgi/django_with_nginx.sock
+## chown-socket = root:nginx
+## chmod-socket = 666
+## vacuum = true
+# http
+http = :8000
+# log
+logto = /var/log/uwsgi/django_with_nginx.log
+# daemon
+pidfile = /run/uwsgi/django_with_nginx.pid
+daemonize = /var/log/uwsgi/django_with_nginxd.log
+```
+
+```sh
+# log 디렉토리 생성
+sudo mkdir -p /var/log/uwsgi
+# run 디렉토리 생성
+sudo mkdir -p /run/uwsgi
+```
+
+### uWSGI 실행
+```sh
+# 실행
+sudo uwsgi --ini /etc/uwsgi/sites/django_with_nginx.ini
+# 끄기
+sudo uwsgi --stop /run/uwsgi/django_with_nginx.pid
+# 프로세스 확인
+ps -ef | grep uwsgi
+```
+
+<!-- #### python 가상환경 설치
+https://beomi.github.io/2016/12/28/HowToSetup-Virtualenv-VirtualenvWrapper/
+```sh
+sudo pip install virtualenvwrapper
+
+vi ./.bashrc
+# source ~/.bashrc 실행하면 ~/Env 경로와 안에 파일들이 생성된다.
+export WORKON_HOME=~/Env
+export VIRTUALENVWRAPPER_PYTHON="$(which python)"
+source /usr/local/bin/virtualenvwrapper.sh
+# .bashrc 실행
+source ~/.bashrc
+# test라는 가상 환경을 만든다. ~/Env/test 경로와 안에 파일이 생성된다.
+# test라는 가상 환경이 활성화 된다.
+mkvirtualenv test
+  # (가상환경이름) [...]$ 이렇게 가상환경에 들어와 있다고 표시된다.
+# 가상환경 지우기
+rmvirtualenv test2
+# 가상환경 이동
+mkvirtualenv test2
+workon test
+# 가상환경 리스트
+workon
+# 가상환경 끄기
+deactivate
+# 현재 가상환경에 설치된 패지키 목록 확인
+pip list
+``` -->
+
+### Nginx 설치
+```sh
+sudo vi /etc/yum.repos.d/nginx.repo
+
+[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/centos/7/$basearch/
+gpgcheck=0
+enabled=1
+
+# Nginx 설치
+sudo yum install nginx
+# 실행
+sudo service nginx start
+sudo chkconfig nginx on
+
+# 설정
+sudo vi /etc/nginx/conf.d/django_with_nginx.conf
+
+server {
+    listen 8000;
+    server_name ec2-13-209-47-7.ap-northeast-2.compute.amazonaws.com;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/run/uwsgi/django_with_nginx.sock;
+    }
+}
+  # Nginx의 localhost:8000/ 이렇게 들어오면 소켓 통신 하겠다는 뜻이다.
 ```
