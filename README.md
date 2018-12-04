@@ -440,11 +440,12 @@ sudo vi /etc/nginx/conf.d/django_with_nginx.conf
 
 server {
     listen 8000;
-    server_name ec2-13-209-47-7.ap-northeast-2.compute.amazonaws.com;
+    server_name <서버 이름 또는 localhost>;
 
     location / {
         include uwsgi_params;
         uwsgi_pass unix:/run/uwsgi/django_with_nginx.sock;
+        # proxy_pass http://<서버 이름 또는 localhost>:8000;
     }
 }
   # Nginx의 localhost:8000/ 이렇게 들어오면 소켓 통신 하겠다는 뜻이다.
