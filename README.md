@@ -243,7 +243,7 @@ telnet <엔드포인트> 3306
 https://docs.aws.amazon.com/ko_kr/AmazonRDS/latest/UserGuide/USER_ConnectToInstance.html
 ```sh
 sudo yum install mysql mysql-devel
-mysql -h myinstance.cqbkpklqb0qa.ap-northeast-2.rds.amazonaws.com -P 3306 -u <사용자명> -p
+mysql -h <호스트명> -P 3306 -u <사용자명> -p
 # mysql>
 SHOW DATABASES;
 CREATE DATABASE DJANGO_TUTORIAL;
