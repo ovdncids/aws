@@ -429,7 +429,7 @@ deactivate
 pip list
 ``` -->
 
-### Nginx 설치
+### nginx 설치
 ```sh
 sudo vi /etc/yum.repos.d/nginx.repo
 
@@ -439,13 +439,14 @@ baseurl=http://nginx.org/packages/centos/7/$basearch/
 gpgcheck=0
 enabled=1
 
-# Nginx 설치
+# nginx 설치
 sudo yum install nginx
 # 실행
 sudo service nginx start
 sudo chkconfig nginx on
 
 # 설정
+## 포트를 추가할 경우
 sudo vi /etc/nginx/conf.d/django_with_nginx.conf
 
 server {
@@ -455,8 +456,16 @@ server {
     location / {
         include uwsgi_params;
         uwsgi_pass unix:/run/uwsgi/django_with_nginx.sock;
-        # proxy_pass http://<서버 이름 또는 localhost>:8000;
     }
 }
-  # Nginx의 localhost:8000/ 이렇게 들어오면 소켓 통신 하겠다는 뜻이다.
+  # nginx의 localhost:8000/ 이렇게 들어오면 소켓 통신 하겠다는 뜻이다.
+
+## 기본 80포트에 경로를 추가할 경우
+sudo vi /etc/nginx/default.d/django_with_nginx.conf
+
+location /admin {
+    proxy_pass http://<서버 이름 또는 localhost>:8000;
+}
+  # nginx의 localhost:80/admin 이렇게 들어오면 proxy로 다른 서버와 통신하겠다는 뜻이다.
+
 ```
