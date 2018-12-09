@@ -261,6 +261,16 @@ https://fabianlee.org/2016/09/07/git-calling-git-clone-using-password-with-speci
 %21 %23 %24 %26 %27 %28 %29 %2A %2B %2C %2F %3A %3B %3D %3F %40 %5B %5D
 ```
 
+#### 새로 생성할때
+```sh
+git init
+git add .
+git commit -m "first commit"
+git remote add origin https://...
+git push -u origin master
+```
+
+#### 이미 사용중인 생성된 곳을 사용 할 때
 ```sh
 # git clone 할때 유저와 패스워드 넣기 (비밀번호를 다시는 물어 보지 않는다.)
 git clone https://username:password@gitlab.com/username/repo.git
