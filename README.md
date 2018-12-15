@@ -274,10 +274,13 @@ git push -u origin master
 ```sh
 # git clone 할때 유저와 패스워드 넣기 (비밀번호를 다시는 물어 보지 않는다.)
 git clone https://username:password@gitlab.com/username/repo.git
-# 특정 기간 동안 묻지 않기 (기본: 15분)
+# Mac
+## 특정 기간 동안 묻지 않기 (기본: 15분)
 git config --global credential.helper cache
-# 특정 기간 10일로 늘리기
+## 특정 기간 10일로 늘리기
 git config --global credential.helper 'cache --timeout=864000'
+# Windows
+git config --global credential.helper winstore
 ```
 
 ### python3 설치
