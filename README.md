@@ -183,6 +183,20 @@ https://console.aws.amazon.com/appsync
 ## DynamoDB
 https://console.aws.amazon.com/dynamodb
 
+### uuid
+https://www.npmjs.com/package/uuid
+https://code.i-harness.com/ko-kr/q/163f122
+```sh
+npm install uuid
+```
+```js
+var uuid = require('uuid');
+uuid.v1();
+  // time-based
+uuid.v4();
+  // random
+```
+
 ## CloudFormation
 https://console.aws.amazon.com/cloudformation/
 
